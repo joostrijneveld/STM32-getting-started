@@ -22,7 +22,7 @@ LDFLAGS		+= --static -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group \
 		   $(ARCH_FLAGS) \
 		   -L$(OPENCM3DIR)/lib
 
-OBJS		+= stm32wrapper.o
+OBJS		+= stm32l1_wrapper.o
 
 all: usart.bin usart_bidirectional.bin dma.bin cyclecount.bin
 

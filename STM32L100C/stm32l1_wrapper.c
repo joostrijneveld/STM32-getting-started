@@ -4,7 +4,7 @@
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/stm32/dma.h>
 
-#include "stm32wrapper.h"
+#include "stm32l1_wrapper.h"
 
 int done_flag = 1;
 
