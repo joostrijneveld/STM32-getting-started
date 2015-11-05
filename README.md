@@ -6,6 +6,6 @@ This repository contains short proof-of-concepts for STM32 boards using a very m
 
 ### Installation
 
-This code assumes you have the arm-none-eabi toolchain and libopencm3 installed and accessible. Details on installing these requirements will probably follow shortly, along with a more detailed usage guide.
+This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) and libopencm3 installed and accessible. Details on installing these requirements will probably follow shortly, along with a more detailed usage guide.
 
 Binaries can be compiled by calling e.g. `make usart.bin`. Make sure that the `OPENCM3DIR` variable is set correctly (i.e. that it points to the directory where libopencm3 is installed). Binaries can then be flashed onto the boards using [stlink](https://github.com/texane/stlink), as follows: `st-flash write usart.bin 0x8000000`.
