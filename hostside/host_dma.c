@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     while (!read(usbdev, &c, 1));
     unsigned char buf[] = "Defend at noon\r\n";
     write(usbdev, buf, 16);
-    printf("Written 16 bytes\r\n");
+    fprintf(stderr, "Written 16 bytes\r\n");
     while (1) {
         while (!read(usbdev, &c, 1));
         printf("%c", c);
