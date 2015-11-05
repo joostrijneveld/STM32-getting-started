@@ -6,8 +6,6 @@
 
 #include "stm32f4_wrapper.h"
 
-int done_flag = 1;
-
 void clock_setup(void)
 {
     rcc_clock_setup_hse_3v3(&hse_8mhz_3v3[CLOCK_3V3_168MHZ]);
@@ -56,8 +54,6 @@ void dma_request_setup(void)
     dma_disable_direct_mode_error_interrupt(DMA1, DMA_STREAM5);
     dma_disable_fifo_error_interrupt(DMA1, DMA_STREAM5);
     dma_enable_transfer_complete_interrupt(DMA1, DMA_STREAM5);
-
-    usart_enable_rx_dma(USART2);
 }
 
 void dma_transmit_setup(void)
@@ -82,36 +78,32 @@ void dma_transmit_setup(void)
     dma_disable_direct_mode_error_interrupt(DMA1, DMA_STREAM6);
     dma_disable_fifo_error_interrupt(DMA1, DMA_STREAM6);
     dma_enable_transfer_complete_interrupt(DMA1, DMA_STREAM6);
-
-    usart_enable_tx_dma(USART2);
 }
 
 void dma_request(void* buffer, const int datasize)
 {
-    done_flag = 0;
-
     dma_set_memory_address(DMA1, DMA_STREAM5, (uint32_t) buffer);
     dma_set_number_of_data(DMA1, DMA_STREAM5, datasize);
 
     dma_channel_select(DMA1, DMA_STREAM5, DMA_SxCR_CHSEL_4);
     dma_enable_stream(DMA1, DMA_STREAM5);
     signal_host();
+    usart_enable_rx_dma(USART2);
 }
 
 void dma_transmit(const void* buffer, const int datasize)
 {
-    done_flag = 0;
-
     dma_set_memory_address(DMA1, DMA_STREAM6, (uint32_t) buffer);
     dma_set_number_of_data(DMA1, DMA_STREAM6, datasize);
 
     dma_channel_select(DMA1, DMA_STREAM6, DMA_SxCR_CHSEL_4);
     dma_enable_stream(DMA1, DMA_STREAM6);
+    usart_enable_tx_dma(USART2);
 }
 
 int dma_done(void)
 {
-    return done_flag;
+    return !((DMA1_S5CR | DMA1_S6CR) & 1);
 }
 
 void send_USART_str(const unsigned char* in)
@@ -141,15 +133,15 @@ void recv_USART_bytes(unsigned char* out, int n)
 }
 
 void dma1_stream5_isr(void) {
+    usart_disable_rx_dma(USART2);
     dma_clear_interrupt_flags(DMA1, DMA_STREAM5, DMA_TCIF);
     dma_disable_stream(DMA1, DMA_STREAM5);
-    done_flag = 1;
 }
 
 void dma1_stream6_isr(void) {
+    usart_disable_tx_dma(USART2);
     dma_clear_interrupt_flags(DMA1, DMA_STREAM6, DMA_TCIF);
     dma_disable_stream(DMA1, DMA_STREAM6);
-    done_flag = 1;
 }
 
 void signal_host(void) {

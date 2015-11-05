@@ -6,8 +6,6 @@
 
 #include "stm32l1_wrapper.h"
 
-int done_flag = 1;
-
 void clock_setup(void)
 {
     rcc_clock_setup_pll(&clock_config[CLOCK_VRANGE1_HSI_PLL_32MHZ]);
@@ -54,8 +52,6 @@ void dma_request_setup(void)
     dma_disable_transfer_error_interrupt(DMA1, DMA_CHANNEL6);
     dma_disable_half_transfer_interrupt(DMA1, DMA_CHANNEL6);
     dma_enable_transfer_complete_interrupt(DMA1, DMA_CHANNEL6);
-
-    usart_enable_rx_dma(USART2);
 }
 
 void dma_transmit_setup(void)
@@ -78,34 +74,30 @@ void dma_transmit_setup(void)
     dma_disable_transfer_error_interrupt(DMA1, DMA_CHANNEL7);
     dma_disable_half_transfer_interrupt(DMA1, DMA_CHANNEL7);
     dma_enable_transfer_complete_interrupt(DMA1, DMA_CHANNEL7);
-
-    usart_enable_tx_dma(USART2);
 }
 
 void dma_request(void* buffer, const int datasize)
 {
-    done_flag = 0;
-
     dma_set_memory_address(DMA1, DMA_CHANNEL6, (uint32_t) buffer);
     dma_set_number_of_data(DMA1, DMA_CHANNEL6, datasize);
 
     dma_enable_channel(DMA1, DMA_CHANNEL6);
     signal_host();
+    usart_enable_rx_dma(USART2);
 }
 
 void dma_transmit(const void* buffer, const int datasize)
 {
-    done_flag = 0;
-
     dma_set_memory_address(DMA1, DMA_CHANNEL7, (uint32_t) buffer);
     dma_set_number_of_data(DMA1, DMA_CHANNEL7, datasize);
 
     dma_enable_channel(DMA1, DMA_CHANNEL7);
+    usart_enable_tx_dma(USART2);
 }
 
 int dma_done(void)
 {
-    return done_flag;
+    return !((DMA1_CCR6 | DMA1_CCR7) & 1);
 }
 
 void send_USART_str(const unsigned char* in)
@@ -135,17 +127,17 @@ void recv_USART_bytes(unsigned char* out, int n)
 }
 
 void dma1_channel6_isr(void) {
+    usart_disable_rx_dma(USART2);
     dma_clear_interrupt_flags(DMA1, DMA_CHANNEL6, DMA_TCIF);
     dma_disable_channel(DMA1, DMA_CHANNEL6);
-    done_flag = 1;
 }
 
 void dma1_channel7_isr(void) {
+    usart_disable_tx_dma(USART2);
     dma_clear_interrupt_flags(DMA1, DMA_CHANNEL7, DMA_TCIF);
     dma_disable_channel(DMA1, DMA_CHANNEL7);
-    done_flag = 1;
 }
 
 void signal_host(void) {
-    usart_send(USART2, '\n');
+    usart_send_blocking(USART2, 'z');
 }
