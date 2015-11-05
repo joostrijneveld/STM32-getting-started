@@ -103,7 +103,7 @@ void dma_transmit(const void* buffer, const int datasize)
 
 int dma_done(void)
 {
-    return !((DMA1_S5CR | DMA1_S6CR) & 1);
+    return !((DMA1_S5CR | DMA1_S6CR) & DMA_SxCR_EN);
 }
 
 void send_USART_str(const unsigned char* in)
