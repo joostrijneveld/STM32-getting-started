@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import serial
+import sys
 
-ser = serial.Serial("/dev/ttyUSB0", 921600)
+dev = serial.Serial("/dev/ttyUSB0", 921600)
 
-ser.read(1)  # wait for the signal
-ser.write("Defend at noon\r\n".encode('utf-8'))
+print("> Waiting for signal..", file=sys.stderr)
+dev.read(1)
+print("> Writing 16 bytes..", file=sys.stderr)
+dev.write("Defend at noon\r\n".encode('utf-8'))
+print("> Returned data:", file=sys.stderr)
 
 while True:
-    x = ser.read()
-    print(x.decode('utf-8'), end='', flush=True)
+    x = dev.read()
+    sys.stdout.buffer.write(x)
+    sys.stdout.flush()
