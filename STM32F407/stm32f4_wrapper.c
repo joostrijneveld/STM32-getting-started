@@ -4,7 +4,7 @@
 #include <libopencm3/cm3/nvic.h>
 #include <libopencm3/stm32/dma.h>
 
-#include "stm32f4_wrapper.h"
+#include "../common/stm32wrapper.h"
 
 void clock_setup(void)
 {
