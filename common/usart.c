@@ -7,7 +7,9 @@ int main(void)
     gpio_setup();
     usart_setup(115200);
 
-    send_USART_bytes((unsigned char*)"Attack at dawn\r\n", 16);
+    send_USART_str((unsigned char*)"Attack at dawn");
+
+    while(1);
 
     return 0;
 }

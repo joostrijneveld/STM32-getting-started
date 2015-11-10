@@ -25,5 +25,7 @@ int main(void)
     sprintf((char *)output, "Cost: %d", newcount);
     send_USART_str(output);
 
+    while (1);
+
     return 0;
 }

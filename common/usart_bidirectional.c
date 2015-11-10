@@ -13,5 +13,7 @@ int main(void)
     x += 1;
     send_USART_bytes(&x, 1);
 
+    while (1);
+
     return 0;
 }
