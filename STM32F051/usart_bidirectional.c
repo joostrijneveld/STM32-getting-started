@@ -1,0 +1,1 @@
+../common/usart_bidirectional.c
