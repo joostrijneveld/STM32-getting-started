@@ -24,7 +24,7 @@ LDFLAGS		+= --static -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group \
 
 OBJS		+= stm32f0_wrapper.o
 
-all: usart.bin usart_bidirectional.bin
+all: usart.bin usart_bidirectional.bin dma.bin
 
 %.bin: %.elf
 	$(OBJCOPY) -Obinary $(*).elf $(*).bin
