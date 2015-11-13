@@ -7,19 +7,19 @@ int main(void)
     gpio_setup();
     usart_setup(115200);
 
-    volatile unsigned int *DWT_CYCCNT = (unsigned int *)0xE0001004;
-    volatile unsigned int *DWT_CTRL = (unsigned int *)0xE0001000;
-    volatile unsigned int *SCB_DEMCR = (unsigned int *)0xE000EDFC;
+    // plainly reading from CYCCNT is more efficient than using the
+    // dwt_read_cycle_counter() interface offered by libopencm3,
+    // as this adds extra overhead because of the function call
 
-    *SCB_DEMCR = *SCB_DEMCR | 0x01000000;
-    *DWT_CYCCNT = 0; // reset the counter
-    *DWT_CTRL = *DWT_CTRL | 1 ; // enable the counter
+    SCS_DEMCR |= SCS_DEMCR_TRCENA;
+    DWT_CYCCNT = 0;
+    DWT_CTRL |= DWT_CTRL_CYCCNTENA;
 
     int i;
-    unsigned int oldcount = *DWT_CYCCNT;
+    unsigned int oldcount = DWT_CYCCNT;
     for (i = 0; i < 100000; i++)
         __asm__("NOP");
-    unsigned int newcount = (*DWT_CYCCNT)-oldcount;
+    unsigned int newcount = DWT_CYCCNT-oldcount;
 
     unsigned char output[32];
     sprintf((char *)output, "Cost: %d", newcount);
