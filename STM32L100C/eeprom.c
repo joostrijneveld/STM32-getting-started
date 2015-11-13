@@ -1,7 +1,6 @@
 #include "../common/stm32wrapper.h"
 #include <stdio.h>
 #include <stdint.h>
-#include <libopencm3/stm32/flash.h>
 
 int main(void)
 {
