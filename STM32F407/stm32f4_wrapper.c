@@ -40,7 +40,7 @@ void dma_request_setup(void)
 
     dma_set_priority(DMA1, DMA_STREAM5, DMA_SxCR_PL_VERY_HIGH);
 
-    dma_disable_peripheral_increment_mode(DMA1, DMA_SxCR_CHSEL_4);
+    dma_disable_peripheral_increment_mode(DMA1, (uint8_t) DMA_SxCR_CHSEL_4);
     dma_enable_memory_increment_mode(DMA1, DMA_STREAM5);
 
     dma_disable_transfer_error_interrupt(DMA1, DMA_STREAM5);
@@ -64,7 +64,7 @@ void dma_transmit_setup(void)
 
     dma_set_priority(DMA1, DMA_STREAM6, DMA_SxCR_PL_VERY_HIGH);
 
-    dma_disable_peripheral_increment_mode(DMA1, DMA_SxCR_CHSEL_4);
+    dma_disable_peripheral_increment_mode(DMA1, (uint8_t) DMA_SxCR_CHSEL_4);
     dma_enable_memory_increment_mode(DMA1, DMA_STREAM6);
 
     dma_disable_transfer_error_interrupt(DMA1, DMA_STREAM6);
