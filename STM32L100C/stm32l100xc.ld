@@ -18,7 +18,7 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* Linker script for STM32L100RC, 256K flash, 16K RAM. */
+/* Linker script for STM32L100xC, 256K flash, 16K RAM. */
 
 /* Define memory regions. */
 MEMORY

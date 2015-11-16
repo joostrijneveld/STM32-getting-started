@@ -1,5 +1,5 @@
 
-LDSCRIPT = stm32l100rc.ld
+LDSCRIPT = stm32l100xc.ld
 
 PREFIX	?= arm-none-eabi
 CC		= $(PREFIX)-gcc
