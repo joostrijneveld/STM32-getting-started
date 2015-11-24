@@ -133,5 +133,5 @@ void dma1_channel7_isr(void) {
 }
 
 void signal_host(void) {
-    usart_send_blocking(USART2, 'z');
+    usart_send_blocking(USART2, 'x');
 }

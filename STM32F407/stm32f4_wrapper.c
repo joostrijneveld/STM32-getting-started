@@ -139,5 +139,5 @@ void dma1_stream6_isr(void) {
 }
 
 void signal_host(void) {
-    usart_send_blocking(USART2, '\n');
+    usart_send_blocking(USART2, 'x');
 }
