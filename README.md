@@ -4,13 +4,23 @@ This repository contains short proof-of-concepts for STM32 boards using a very m
 
 ### Installation
 
-This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) and libopencm3 installed and accessible. Details on installing these requirements will probably follow shortly, along with a more detailed usage guide.
+This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) and libopencm3 installed and accessible. Confusingly, the tools available in the (discontinued) embedian project have identical names - be careful to select the correct toolchain (or consider re-installing if you experience unexpected behaviour). On most Linux systems, the correct toolchain gets installed when you install the `arm-none-eabi-gcc` package. To install libopencm3, clone the git repository and run `make && sudo make install`.
+
+**Note**: the current HEAD of libopencm3 [no longer provides](https://github.com/libopencm3/libopencm3/commit/7c1cd2e) `make install` functionality. Until further notice, the recommended approach is to checkout the [last commit before this change](https://github.com/libopencm3/libopencm3/commit/2eade07) and install from there:
+
+```
+git clone https://github.com/libopencm3/libopencm3
+cd libopencm3
+git checkout 2eade07
+```
 
 Binaries can be compiled by calling e.g. `make usart.bin`. Make sure that the `OPENCM3DIR` variable is set correctly (i.e. that it points to the directory where libopencm3 is installed). Binaries can then be flashed onto the boards using [stlink](https://github.com/texane/stlink), as follows: `st-flash write usart.bin 0x8000000`.
 
 The host-side Python code requires the [pyserial](https://github.com/pyserial/pyserial) module. This can be easily installed by calling `pip install pyserial`. Use the `host_unidirectional.py` script for all code examples except for DMA.
 
 ### Troubleshooting
+
+
 
 At some point the boards might behave differently than one would expect, to a point where simply power-cycling the board does not help. In these cases, it is useful to be aware of a few trouble-shooting steps.
 
