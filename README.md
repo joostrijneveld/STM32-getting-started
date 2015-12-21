@@ -4,7 +4,7 @@ This repository contains short proof-of-concepts for STM32 boards using a very m
 
 ### Installation
 
-This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) and libopencm3 installed and accessible. Confusingly, the tools available in the (discontinued) embedian project have identical names - be careful to select the correct toolchain (or consider re-installing if you experience unexpected behaviour). On most Linux systems, the correct toolchain gets installed when you install the `arm-none-eabi-gcc` package. To install libopencm3, clone the git repository and run `make && sudo make install`.
+This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) and libopencm3 installed and accessible. Confusingly, the tools available in the (discontinued) embedian project have identical names - be careful to select the correct toolchain (or consider re-installing if you experience unexpected behaviour). On most Linux systems, the correct toolchain gets installed when you install the `arm-none-eabi-gcc` package (it may be called `gcc-arm-none-eabi` on your system). To install libopencm3, clone the git repository and run `make && sudo make install`.
 
 **Note**: the current HEAD of libopencm3 [no longer provides](https://github.com/libopencm3/libopencm3/commit/7c1cd2e) `make install` functionality. Until further notice, the recommended approach is to checkout the [last commit before this change](https://github.com/libopencm3/libopencm3/commit/2eade07) and install from there:
 
