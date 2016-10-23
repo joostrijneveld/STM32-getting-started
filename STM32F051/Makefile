@@ -1,5 +1,5 @@
 
-LDSCRIPT = stm32f0-discovery.ld
+LDSCRIPT   = ../libopencm3/lib/stm32/f0/stm32f05xz8.ld
 LIBNAME    = opencm3_stm32f0
 ARCH_FLAGS = -mthumb -mcpu=cortex-m0 -msoft-float
 DEFINES    = -DSTM32F0

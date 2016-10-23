@@ -1,5 +1,5 @@
 
-LDSCRIPT   = stm32l100xc.ld
+LDSCRIPT   = ../libopencm3/lib/stm32/l1/stm32l100xc.ld
 LIBNAME    = opencm3_stm32l1
 ARCH_FLAGS = -mthumb -mcpu=cortex-m3 -msoft-float
 DEFINES    = -DSTM32L1
