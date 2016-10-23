@@ -4,23 +4,15 @@ This repository contains short proof-of-concepts for STM32 boards using a very m
 
 ### Installation
 
-This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) and libopencm3 installed and accessible. Confusingly, the tools available in the (discontinued) embedian project have identical names - be careful to select the correct toolchain (or consider re-installing if you experience unexpected behaviour). On most Linux systems, the correct toolchain gets installed when you install the `arm-none-eabi-gcc` package (it may be called `gcc-arm-none-eabi` on your system). To install libopencm3, clone the git repository and run `make && sudo make install`.
+This code assumes you have the [arm-none-eabi toolchain](https://launchpad.net/gcc-arm-embedded) installed and accessible. Confusingly, the tools available in the (discontinued) embedian project have identical names - be careful to select the correct toolchain (or consider re-installing if you experience unexpected behaviour). On most Linux systems, the correct toolchain gets installed when you install the `arm-none-eabi-gcc` package.
 
-**Note**: the current HEAD of libopencm3 [no longer provides](https://github.com/libopencm3/libopencm3/commit/7c1cd2e) `make install` functionality (and the recommended approach is now to include it in your project and link it explicitly). By checking out the [last commit before this change](https://github.com/libopencm3/libopencm3/commit/2eade07), you can still install the library system-wide, however:
+This project relies on the [libopencm3](https://github.com/libopencm3/libopencm3/) firmware. This is included as a submodule. Compile it (e.g. by calling `make lib` in one of the platform-specific directories) before attempting to compile any of the other targets.
 
-```
-git clone https://github.com/libopencm3/libopencm3
-cd libopencm3
-git checkout 2eade07
-```
-
-Binaries can be compiled by calling e.g. `make usart.bin`. Make sure that the `OPENCM3DIR` variable is set correctly (i.e. that it points to the directory where libopencm3 is installed). Binaries can then be flashed onto the boards using [stlink](https://github.com/texane/stlink), as follows: `st-flash write usart.bin 0x8000000`.
+Binaries can be compiled by calling e.g. `make usart.bin`. Binaries can then be flashed onto the boards using [stlink](https://github.com/texane/stlink), as follows: `st-flash write usart.bin 0x8000000`.
 
 The host-side Python code requires the [pyserial](https://github.com/pyserial/pyserial) module. This can be easily installed by calling `pip install pyserial` (or `pip3`, depending on your system). If you do not have `pip` installed yet, you can typically find it as `python3-pip` using your package manager. Use the `host_unidirectional.py` script for all code examples (except for DMA and bidirectional communication).
 
 ### Troubleshooting
-
-
 
 At some point the boards might behave differently than one would expect, to a point where simply power-cycling the board does not help. In these cases, it is useful to be aware of a few trouble-shooting steps.
 
