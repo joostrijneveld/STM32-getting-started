@@ -2,7 +2,7 @@
 import serial
 import sys
 
-dev = serial.Serial("/dev/ttyUSB0", 921600)
+dev = serial.Serial("/dev/ttyUSB0", 115200)
 
 print("> Waiting for signal..", file=sys.stderr)
 dev.read(1)

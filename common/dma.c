@@ -4,7 +4,7 @@ int main(void)
 {
     clock_setup();
     gpio_setup();
-    usart_setup(921600);
+    usart_setup(115200);
     dma_transmit_setup();
     dma_request_setup();
 
