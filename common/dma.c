@@ -8,16 +8,17 @@ int main(void)
     dma_transmit_setup();
     dma_request_setup();
 
-    unsigned char buf[16];
+    unsigned char buf[13];
 
-    dma_request(buf, 16); while (!dma_done());
+    dma_request(buf, 13); while (!dma_done());
 
-    buf[10] = 'd';
-    buf[11] = 'a';
-    buf[12] = 'w';
-    buf[13] = 'n';
+    buf[6] = 'W';
+    buf[7] = 'O';
+    buf[8] = 'R';
+    buf[9] = 'L';
+    buf[10] = 'D';
 
-    dma_transmit(buf, 16); while (!dma_done());
+    dma_transmit(buf, 13); while (!dma_done());
 
     while(1);
 
